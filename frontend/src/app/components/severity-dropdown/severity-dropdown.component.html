@@ -1,0 +1,8 @@
+<app-dropdown
+  [label]="label"
+  [options]="severityOptions"
+  [invalid]="severityInvalid"
+  [selectedOption]="selectedSeverity"
+  [errorMessage]="getSeverityError()"
+  (optionSelected)="onSeveritySelected($event)"
+/>

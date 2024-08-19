@@ -1,0 +1,56 @@
+services:
+  mongo:
+    image: mongo:8.0-rc-noble
+    container_name: mongo
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_DATABASE: Registration
+      MONGO_INITDB_ROOT_USERNAME: finaktiva
+      MONGO_INITDB_ROOT_PASSWORD: finaktiva
+      MONGO_INITDB_COLLECTION: EventLogs
+    restart: always
+    volumes:
+      - mongo-data:/data/db
+      - ./database/mongo/init-mongo.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+    networks:
+      - server-side-network
+
+  server:
+    image: xagh/finaktiva-technical-test-server
+    container_name: server
+    restart: always
+    environment:
+      - PORT=3000
+      - HOST=0.0.0.0
+      - MONGO_URI=mongodb://finaktiva:finaktiva@mongo:27017/Registration
+    depends_on:
+      - mongo
+    ports:
+      - "3000:3000"
+    networks:
+      - server-side-network
+      - client-side-network
+
+  client:
+    image: xagh/finaktiva-technical-test-client
+    container_name: angular
+    restart: always
+    depends_on:
+      - server
+    environment:
+      - BACKEND_URL=http://server:3000/
+    ports:
+      - "8080:80"
+    networks:
+      - client-side-network
+
+volumes:
+  mongo-data:
+
+
+networks:
+  server-side-network:
+    driver: bridge
+  client-side-network:
+    driver: bridge

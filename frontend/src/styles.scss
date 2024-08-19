@@ -1,0 +1,18 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import "ngx-toastr/toastr";
+
+* {
+  @apply p-0 m-0 box-border;
+}
+
+body {
+  @apply h-screen bg-background text-text;
+}
+
+::-webkit-scrollbar {
+  display: none;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}

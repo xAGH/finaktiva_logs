@@ -1,0 +1,8 @@
+<app-dropdown
+  [label]="label"
+  [options]="typeOptions"
+  [invalid]="typeInvalid"
+  [selectedOption]="selectedType"
+  [errorMessage]="getTypeError()"
+  (optionSelected)="onTypeSelected($event)"
+/>

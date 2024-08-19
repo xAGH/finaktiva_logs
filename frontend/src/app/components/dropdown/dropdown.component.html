@@ -1,0 +1,49 @@
+<div class="relative gap-2" [ngClass]="{ 'flex flex-col': label }">
+  @if (label !== null) {
+  <label class="text-xl" [for]="controlName">{{ label }}</label>
+  }
+  <div
+    class="relative rounded-md"
+    [ngClass]="{ invalid: invalid && touched }"
+    (mouseenter)="showError = true"
+    (mouseleave)="showError = false"
+    [ngClass]="{
+      invalid: touched && invalid,
+    }"
+  >
+    <div
+      (click)="toggleDropdown()"
+      class="dropdown"
+      [ngClass]="!isOpen ? 'rounded-md' : 'rounded-t-md'"
+    >
+      <span class="text-lg">{{ selectedOption || placeholder }}</span>
+      <svg
+        fill="#EEEEEE"
+        height="30px"
+        width="30px"
+        viewBox="0 0 24 24"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path d="M7 10l5 5 5-5z" />
+      </svg>
+    </div>
+    @if (isOpen) {
+    <div class="dropdown-content" (mouseleave)="onMouseLeaveOptions()">
+      @for (option of options; track $index) {
+      <a
+        (click)="selectOption(option)"
+        class="dropdown-option"
+        [ngClass]="{ 'option-selected': option === selectedOption }"
+      >
+        {{ option }}
+      </a>
+      }
+    </div>
+    }
+  </div>
+  @if (showError && invalid && touched && !isOpen) {
+  <div class="absolute right-0 -bottom-8 text-red-600 text-lg">
+    {{ errorMessage }}
+  </div>
+  }
+</div>

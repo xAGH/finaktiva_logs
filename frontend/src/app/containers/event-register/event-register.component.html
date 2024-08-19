@@ -1,0 +1,41 @@
+<ng-container>
+  <div class="flex flex-col gap-6 overflow-y-auto h-full">
+    <span class="text-3xl text-center font-medium">Register Event</span>
+    <form
+      [formGroup]="eventForm"
+      (ngSubmit)="onSubmit()"
+      class="flex flex-col gap-8 h-full w-full justify-center"
+    >
+      <app-input
+        label="Date"
+        controlName="date"
+        [control]="eventForm.get('date')"
+        type="date"
+        [max]="today"
+      />
+
+      <app-input
+        label="Time"
+        controlName="time"
+        [control]="eventForm.get('time')"
+        type="time"
+      />
+
+      <app-severity-dropdown class="w-full" [formGroup]="eventForm" />
+
+      <app-input
+        label="Description"
+        controlName="description"
+        [control]="eventForm.get('description')"
+        inputType="textarea"
+      />
+      <div class="w-full mt-auto mb-10">
+        <app-button
+          class="w-full"
+          [isDisabled]="!eventForm.valid"
+          text="Register Event"
+        />
+      </div>
+    </form>
+  </div>
+</ng-container>

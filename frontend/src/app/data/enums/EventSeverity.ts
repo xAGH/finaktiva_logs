@@ -1,0 +1,7 @@
+export enum EventSeverity {
+  ERROR = 'ERROR',
+  DEBUG = 'DEBUG',
+  WARNING = 'WARNING',
+  SECURITY = 'SECURITY',
+  INFORMATION = 'INFORMATION',
+}

@@ -1,0 +1,56 @@
+<main class="flex overflow-x-auto w-screen h-screen">
+  <div
+    class="flex [transition:transform_0.5s_ease-in-out] w-[200%]"
+    [ngClass]="{
+      '-translate-x-full': showRightCard,
+      'translate-x-[0]': !showRightCard
+    }"
+  >
+    <app-card class="min-w-full overflow-y-auto relative p-10">
+      <app-card-switcher
+        (clickEvent)="switchCard()"
+        text="Create event"
+        class="absolute z-10 top-20 right-20"
+      />
+      <div
+        class="flex flex-col gap-10 h-full"
+        [ngClass]="{
+          'justify-center items-center':
+            eventSrv.events().length < 1 && !eventSrv.hasFilters()
+        }"
+      >
+        @if (eventSrv.events().length < 1 && !eventSrv.hasFilters()) {
+        <div
+          (click)="switchCard()"
+          class="p-10 bg-primary w-2/12 rounded-lg hover:p-10 z-10 cursor-pointer hover:opacity-80 flex flex-col justify-center items-center"
+        >
+          <app-add-event-button (onClick)="switchCard()" />
+          <span class="text-xl text-center">Add a log event</span>
+        </div>
+        } @else {
+        <app-event-search />
+        <app-event-list />
+        }
+      </div>
+    </app-card>
+    <div class="min-w-full p-10 flex gap-40 justify-center relative">
+      <img
+        src="/assets/images/register.svg"
+        alt="Register Event"
+        class="w-1/3 mt-10"
+      />
+      <app-card-switcher
+        [pointintRight]="false"
+        (clickEvent)="switchCard()"
+        text="Events list"
+        class="absolute z-10 top-20 left-20"
+      />
+      <app-card class="overflow-y-auto relative w-1/3">
+        <app-event-register
+          (onSubmitEvent)="switchCard()"
+          class="flex flex-col h-full"
+        />
+      </app-card>
+    </div>
+  </div>
+</main>

@@ -1,0 +1,64 @@
+<ng-container>
+  <form class="flex items-center gap-10" [formGroup]="filterForm">
+    @if(showFilters) {
+    <app-dropdown
+      [invalid]="false"
+      [options]="filterOptions"
+      placeholder="Select a filter"
+      (optionSelected)="onFilterSelected($event)"
+    />
+    } @switch (filterSelected) { @case ("id") {
+    <app-input
+      [control]="filterForm.get('id')"
+      placeholder="Id"
+      controlName="id"
+      type="text"
+    />
+
+    } @case ("description") {
+    <app-input
+      [control]="filterForm.get('description')"
+      placeholder="Description"
+      controlName="description"
+      inputType="textarea"
+    />
+    } @case ("timeMin") {
+    <app-input
+      [control]="filterForm.get('timeMin')"
+      controlName="timeMin"
+      type="time"
+    />
+    } @case ("timeMax") {
+    <app-input
+      [control]="filterForm.get('timeMax')"
+      controlName="timeMax"
+      type="time"
+    />
+    } @case ("severity") {
+    <app-severity-dropdown [label]="null" [formGroup]="filterForm" />} @case
+    ("type") {
+    <app-type-dropdown [label]="null" [formGroup]="filterForm" />
+    } @case ("dateMin") {
+    <app-input
+      controlName="dateMin"
+      [control]="filterForm.get('dateMin')"
+      type="date"
+      [max]="maxDateValue"
+    />
+    } @case ("dateMax") {
+    <app-input
+      controlName="dateMax"
+      [control]="filterForm.get('dateMax')"
+      type="date"
+      [max]="today"
+    />
+    } }
+    <app-button
+      (clickEvent)="handleButtonClick()"
+      [warn]="showFilters && !filterValid"
+      [text]="!showFilters || filterValid ? 'Add filter' : 'Cancel'"
+    />
+  </form>
+</ng-container>
+
+<app-filters [filters]="filters" (remove)="onRemove($event)" />

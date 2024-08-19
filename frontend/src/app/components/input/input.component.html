@@ -1,0 +1,32 @@
+<div class="relative gap-2" [ngClass]="{ 'flex flex-col': label }">
+  @if (label !== null) {
+  <label class="text-xl" [for]="controlName">{{ label }}</label>
+  } @if(inputType=="input") {
+  <input
+    [id]="controlName"
+    [type]="type"
+    [formControl]="control"
+    [attr.max]="max"
+    [ngClass]="{
+        invalid: control.touched && control.invalid,
+      }"
+    [placeholder]="placeholder ?? label ?? controlName"
+    (mouseenter)="showError = true"
+    (mouseleave)="showError = false"
+  />
+  } @else {
+  <textarea
+    [id]="controlName"
+    [formControl]="control"
+    [ngClass]="{ invalid: control.touched && control.invalid }"
+    (mouseenter)="showError = true"
+    (mouseleave)="showError = false"
+  >
+  </textarea>
+  } @if (showError && control.invalid && control.touched) { @if
+  (getErrorMessage()) {
+  <div class="absolute right-0 -bottom-6 text-red-600 text-lg">
+    {{ getErrorMessage() }}
+  </div>
+  } }
+</div>
